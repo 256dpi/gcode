@@ -12,8 +12,7 @@ import (
 
 type Code struct {
 	Letter  string
-	Integer int64
-	Float   float64
+	Value   float64
 	Comment string
 }
 
@@ -116,18 +115,13 @@ func ParseLine(s string) (*Line, error) {
 		c.Letter = string(w[0])
 		w = w[1:]
 
-		// parse integer
-		n, err := strconv.ParseInt(w, 10, 64)
-		if err == nil {
-			c.Integer = n
-		} else {
-			f, err := strconv.ParseFloat(w, 64)
-			if err != nil {
-				return l, err
-			}
-
-			c.Float = f
+		// parse value
+		f, err := strconv.ParseFloat(w, 64)
+		if err != nil {
+			return l, err
 		}
+
+		c.Value = f
 
 		// add code
 		l.Codes = append(l.Codes, c)
@@ -175,18 +169,8 @@ func GenerateLine(w io.Writer, l *Line) error {
 			return err
 		}
 
-		// write integer if set
-		if c.Integer != 0 {
-			_, err := fmt.Fprintf(w, "%d", c.Integer)
-			if err != nil {
-				return err
-			}
-
-			continue
-		}
-
-		// otherwise write float
-		_, err = fmt.Fprintf(w, "%f", c.Float)
+		// write value
+		_, err = io.WriteString(w, strings.TrimRight(strings.TrimRight(fmt.Sprintf("%f", c.Value), "0"), "."))
 		if err != nil {
 			return err
 		}

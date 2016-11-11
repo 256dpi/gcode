@@ -29,3 +29,19 @@ func StripComments(f File) File {
 
 	return f
 }
+
+func OffsetXYZ(f File, x, y, z float64) File {
+	for _, l := range f {
+		for _, c := range l.Codes {
+			if c.Letter == "X" {
+				c.Value += x
+			} else if c.Letter == "Y" {
+				c.Value += y
+			} else if c.Letter == "Z" {
+				c.Value += z
+			}
+		}
+	}
+
+	return f
+}

@@ -1,15 +1,22 @@
 package main
 
-import "github.com/docopt/docopt-go"
+import (
+	"github.com/docopt/docopt-go"
+	"strconv"
+)
 
 type command struct {
 	// commands
-	cInfo    bool
-	cProcess bool
+	cInfo   bool
+	cStrip  bool
+	cOffset bool
 
 	// arguments
 	aInput  string
 	aOutput string
+	aX      float64
+	aY      float64
+	aZ      float64
 }
 
 func parseCommand() *command {
@@ -17,7 +24,8 @@ func parseCommand() *command {
 
 Usage:
   gcode info <input>
-  gcode process <input> <output>
+  gcode strip <input> <output>
+  gcode offset <input> <output> <x> <y> <z>
 
 Options:
   -h --help         Show this screen.
@@ -27,12 +35,16 @@ Options:
 
 	return &command{
 		// commands
-		cInfo:    getBool(a["info"]),
-		cProcess: getBool(a["process"]),
+		cInfo:   getBool(a["info"]),
+		cStrip:  getBool(a["strip"]),
+		cOffset: getBool(a["offset"]),
 
 		// arguments
 		aInput:  getString(a["<input>"]),
 		aOutput: getString(a["<output>"]),
+		aX:      getFloat(a["<x>"]),
+		aY:      getFloat(a["<y>"]),
+		aZ:      getFloat(a["<z>"]),
 	}
 }
 
@@ -50,4 +62,15 @@ func getString(field interface{}) string {
 	}
 
 	return ""
+}
+
+func getFloat(field interface{}) float64 {
+	str := getString(field)
+
+	f, err := strconv.ParseFloat(str, 64)
+	if err != nil {
+		return 0
+	}
+
+	return f
 }
