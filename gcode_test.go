@@ -27,29 +27,29 @@ func TestParse(t *testing.T) {
 	file, err := ParseFile(r)
 	assert.NoError(t, err)
 	assert.Equal(t, File{
-		Line{
+		&Line{
 			Comment: " Line Comment",
 		},
-		Line{
+		&Line{
 			Comment: " After Line Comment",
-			Codes: []Code{
+			Codes: []*Code{
 				{Letter: "G", Integer: 1},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Comment: "Word Comment"},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 2},
 				{Comment: "Word Comment"},
 				{Letter: "M", Integer: 1},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 3},
 				{Comment: "Word Comment"},
 				{Letter: "M", Integer: 2},
@@ -57,38 +57,38 @@ func TestParse(t *testing.T) {
 				{Letter: "M", Integer: 3},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 4},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 5},
 				{Letter: "X"},
 				{Letter: "Y"},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 6},
 				{Letter: "Z", Float: 12.7},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "G", Integer: 7},
 				{Letter: "X", Float: -0.4},
 				{Letter: "Y", Float: 0.8},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "S", Integer: 3000},
 			},
 		},
-		Line{
-			Codes: []Code{
+		&Line{
+			Codes: []*Code{
 				{Letter: "X", Float: 56.666},
 			},
 		},

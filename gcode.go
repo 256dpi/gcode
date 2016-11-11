@@ -18,11 +18,11 @@ type Code struct {
 }
 
 type Line struct {
-	Codes   []Code
+	Codes   []*Code
 	Comment string
 }
 
-type File []Line
+type File []*Line
 
 func ParseFile(r io.Reader) (File, error) {
 	s := bufio.NewScanner(r)
@@ -50,9 +50,9 @@ func ParseFile(r io.Reader) (File, error) {
 	return file, nil
 }
 
-func ParseLine(s string) (Line, error) {
+func ParseLine(s string) (*Line, error) {
 	// prepare line
-	l := Line{}
+	l := &Line{}
 
 	// extract line comment
 	if i := strings.Index(s, ";"); i >= 0 {
@@ -71,7 +71,7 @@ func ParseLine(s string) (Line, error) {
 	// parse line
 	for s != "" {
 		// prepare code
-		c := Code{}
+		c := &Code{}
 
 		// check for word comment
 		if strings.HasPrefix(s, "(") {
@@ -148,7 +148,7 @@ func GenerateFile(w io.Writer, f File) error {
 	return nil
 }
 
-func GenerateLine(w io.Writer, l Line) error {
+func GenerateLine(w io.Writer, l *Line) error {
 	// write all codes
 	for i, c := range l.Codes {
 		// write space if any codes have been before
