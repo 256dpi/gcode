@@ -1,13 +1,13 @@
 package gcode
 
 import (
-	"io"
 	"bufio"
-	"strings"
 	"errors"
-	"unicode"
-	"strconv"
 	"fmt"
+	"io"
+	"strconv"
+	"strings"
+	"unicode"
 )
 
 type Code struct {
@@ -128,7 +128,6 @@ func ParseLine(s string) (Line, error) {
 
 			c.Float = f
 		}
-
 
 		// add code
 		l.Codes = append(l.Codes, c)
