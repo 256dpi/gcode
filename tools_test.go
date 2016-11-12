@@ -56,7 +56,7 @@ func TestOffsetXYZ(t *testing.T) {
 		},
 	}
 
-	f = OffsetXYZ(f, 1, 2, 3)
+	OffsetXYZ(f, 1, 2, 3)
 
 	assert.Equal(t, File{
 		{

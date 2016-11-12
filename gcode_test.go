@@ -95,6 +95,20 @@ func TestParse(t *testing.T) {
 	}, file)
 }
 
+func TestParseInvalid(t *testing.T) {
+	gCodes := []string{
+		"(Invalid Comment", // <- missing end brace
+		"g1",               // <- not upper case
+		"G",                // <- missing value
+		"GF",               // <- invalid value
+	}
+
+	for _, gc := range gCodes {
+		_, err := ParseFile(strings.NewReader(gc))
+		assert.Error(t, err)
+	}
+}
+
 func TestGenerate(t *testing.T) {
 	r := strings.NewReader(testGCode)
 

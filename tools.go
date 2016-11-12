@@ -30,7 +30,7 @@ func StripComments(f File) File {
 	return f
 }
 
-func OffsetXYZ(f File, x, y, z float64) File {
+func OffsetXYZ(f File, x, y, z float64) {
 	for _, l := range f {
 		for _, c := range l.Codes {
 			if c.Letter == "X" {
@@ -42,6 +42,4 @@ func OffsetXYZ(f File, x, y, z float64) File {
 			}
 		}
 	}
-
-	return f
 }

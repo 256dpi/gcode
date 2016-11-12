@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/docopt/docopt-go"
 	"strconv"
+
+	"github.com/docopt/docopt-go"
 )
 
 type command struct {
