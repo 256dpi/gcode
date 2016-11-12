@@ -36,7 +36,7 @@ func writeFile(path string, f *gcode.File) {
 	defer file.Close()
 
 	// parse file
-	err = gcode.GenerateFile(file, f)
+	err = gcode.WriteFile(file, f)
 	if err != nil {
 		panic(err)
 	}
