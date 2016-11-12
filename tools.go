@@ -1,5 +1,7 @@
 package gcode
 
+// StripComments will remove all inline and line comments from file and return
+// a striped file.
 func StripComments(f File) File {
 	cl := 0
 	for i := range f {
@@ -30,6 +32,7 @@ func StripComments(f File) File {
 	return f
 }
 
+// OffsetXYZ will offset all X, Y and Z G-Code values by the specified values.
 func OffsetXYZ(f File, x, y, z float64) {
 	for _, l := range f {
 		for _, c := range l.Codes {

@@ -32,24 +32,24 @@ func TestParse(t *testing.T) {
 		},
 		&Line{
 			Comment: " After Line Comment",
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 1},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Comment: "Word Comment"},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 2},
 				{Comment: "Word Comment"},
 				{Letter: "M", Value: 1},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 3},
 				{Comment: "Word Comment"},
 				{Letter: "M", Value: 2},
@@ -58,37 +58,37 @@ func TestParse(t *testing.T) {
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 4},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 5},
 				{Letter: "X"},
 				{Letter: "Y"},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 6},
 				{Letter: "Z", Value: 12.7},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "G", Value: 7},
 				{Letter: "X", Value: -0.4},
 				{Letter: "Y", Value: 0.8},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "S", Value: 3000},
 			},
 		},
 		&Line{
-			Codes: []*Code{
+			Codes: []*GCode{
 				{Letter: "X", Value: 56.666},
 			},
 		},

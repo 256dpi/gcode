@@ -10,19 +10,24 @@ import (
 	"unicode"
 )
 
-type Code struct {
+// A GCode is either a single G-Code like "X12.3" or an in line comment in the
+// form of "(Comment)".
+type GCode struct {
 	Letter  string
 	Value   float64
 	Comment string
 }
 
+// A Line consists of multiple G-Codes and a potential line comment.
 type Line struct {
-	Codes   []*Code
+	Codes   []*GCode
 	Comment string
 }
 
+// A File contains multiple lines of G-Codes.
 type File []*Line
 
+// ParseFile will parse a whole G-Code file from the passed reader.
 func ParseFile(r io.Reader) (File, error) {
 	s := bufio.NewScanner(r)
 
@@ -49,6 +54,7 @@ func ParseFile(r io.Reader) (File, error) {
 	return file, nil
 }
 
+// ParseLine will parse the specified string as a line of G-Codes.
 func ParseLine(s string) (*Line, error) {
 	// prepare line
 	l := &Line{}
@@ -70,7 +76,7 @@ func ParseLine(s string) (*Line, error) {
 	// parse line
 	for s != "" {
 		// prepare code
-		c := &Code{}
+		c := &GCode{}
 
 		// check for word comment
 		if strings.HasPrefix(s, "(") {
@@ -130,10 +136,11 @@ func ParseLine(s string) (*Line, error) {
 	return l, nil
 }
 
+// GenerateFile will write the specified G-Code file to the passed writer.
 func GenerateFile(w io.Writer, f File) error {
 	// generate lines
 	for _, l := range f {
-		err := GenerateLine(w, l)
+		_, err := io.WriteString(w, GenerateLine(l))
 		if err != nil {
 			return err
 		}
@@ -142,61 +149,44 @@ func GenerateFile(w io.Writer, f File) error {
 	return nil
 }
 
-func GenerateLine(w io.Writer, l *Line) error {
+// GenerateLine will return the string representation of the passed line.
+func GenerateLine(l *Line) string {
+	// prepare string
+	s := ""
+
 	// write all codes
 	for i, c := range l.Codes {
-		// write space if any codes have been before
+		// add space if any codes have been already added
 		if i > 0 {
-			_, err := io.WriteString(w, " ")
-			if err != nil {
-				return err
-			}
+			s = s + " "
 		}
 
-		// check comment
+		// add comment if present
 		if c.Comment != "" {
-			_, err := fmt.Fprintf(w, "(%s)", c.Comment)
-			if err != nil {
-				return err
-			}
-
+			s = s + fmt.Sprintf("(%s)", c.Comment)
 			continue
 		}
 
 		// write letter
-		_, err := io.WriteString(w, c.Letter)
-		if err != nil {
-			return err
-		}
+		s = s + c.Letter
 
 		// write value
-		_, err = io.WriteString(w, strings.TrimRight(strings.TrimRight(fmt.Sprintf("%f", c.Value), "0"), "."))
-		if err != nil {
-			return err
-		}
+		s = s + strings.TrimRight(strings.TrimRight(fmt.Sprintf("%f", c.Value), "0"), ".")
 	}
 
 	// write comment if existing
 	if l.Comment != "" {
 		// write space if any codes have been written
 		if len(l.Codes) > 0 {
-			_, err := io.WriteString(w, " ")
-			if err != nil {
-				return err
-			}
+			s = s + " "
 		}
 
-		_, err := fmt.Fprintf(w, ";%s", l.Comment)
-		if err != nil {
-			return err
-		}
+		// add comment
+		s = s + fmt.Sprintf(";%s", l.Comment)
 	}
 
-	// write line feed
-	_, err := io.WriteString(w, "\n")
-	if err != nil {
-		return err
-	}
+	// add line feed
+	s = s + "\n"
 
-	return nil
+	return s
 }
