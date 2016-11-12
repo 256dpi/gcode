@@ -23,7 +23,7 @@ func info(command *command) {
 	// load g-code file
 	file := loadFile(command.aInput)
 
-	fmt.Printf("Lines: %d", len(file))
+	fmt.Printf("Lines: %d", len(file.Lines))
 }
 
 func strip(command *command) {

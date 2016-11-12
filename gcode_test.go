@@ -26,70 +26,72 @@ func TestParse(t *testing.T) {
 
 	file, err := ParseFile(r)
 	assert.NoError(t, err)
-	assert.Equal(t, File{
-		&Line{
-			Comment: " Line Comment",
-		},
-		&Line{
-			Comment: " After Line Comment",
-			Codes: []*GCode{
-				{Letter: "G", Value: 1},
+	assert.Equal(t, &File{
+		Lines: []*Line{
+			{
+				Comment: " Line Comment",
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Comment: "Word Comment"},
+			{
+				Comment: " After Line Comment",
+				Codes: []*GCode{
+					{Letter: "G", Value: 1},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 2},
-				{Comment: "Word Comment"},
-				{Letter: "M", Value: 1},
+			{
+				Codes: []*GCode{
+					{Comment: "Word Comment"},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 3},
-				{Comment: "Word Comment"},
-				{Letter: "M", Value: 2},
-				{Comment: "Word Comment"},
-				{Letter: "M", Value: 3},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 2},
+					{Comment: "Word Comment"},
+					{Letter: "M", Value: 1},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 4},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 3},
+					{Comment: "Word Comment"},
+					{Letter: "M", Value: 2},
+					{Comment: "Word Comment"},
+					{Letter: "M", Value: 3},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 5},
-				{Letter: "X"},
-				{Letter: "Y"},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 4},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 6},
-				{Letter: "Z", Value: 12.7},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 5},
+					{Letter: "X"},
+					{Letter: "Y"},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "G", Value: 7},
-				{Letter: "X", Value: -0.4},
-				{Letter: "Y", Value: 0.8},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 6},
+					{Letter: "Z", Value: 12.7},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "S", Value: 3000},
+			{
+				Codes: []*GCode{
+					{Letter: "G", Value: 7},
+					{Letter: "X", Value: -0.4},
+					{Letter: "Y", Value: 0.8},
+				},
 			},
-		},
-		&Line{
-			Codes: []*GCode{
-				{Letter: "X", Value: 56.666},
+			{
+				Codes: []*GCode{
+					{Letter: "S", Value: 3000},
+				},
+			},
+			{
+				Codes: []*GCode{
+					{Letter: "X", Value: 56.666},
+				},
 			},
 		},
 	}, file)

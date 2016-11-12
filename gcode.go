@@ -25,14 +25,16 @@ type Line struct {
 }
 
 // A File contains multiple lines of G-Codes.
-type File []*Line
+type File struct {
+	Lines []*Line
+}
 
 // ParseFile will parse a whole G-Code file from the passed reader.
-func ParseFile(r io.Reader) (File, error) {
+func ParseFile(r io.Reader) (*File, error) {
 	s := bufio.NewScanner(r)
 
 	// prepare file
-	var file File
+	file := &File{}
 
 	// read line by line
 	for s.Scan() {
@@ -43,7 +45,7 @@ func ParseFile(r io.Reader) (File, error) {
 		}
 
 		// add line
-		file = append(file, line)
+		file.Lines = append(file.Lines, line)
 	}
 
 	// check error
@@ -137,9 +139,9 @@ func ParseLine(s string) (*Line, error) {
 }
 
 // GenerateFile will write the specified G-Code file to the passed writer.
-func GenerateFile(w io.Writer, f File) error {
+func GenerateFile(w io.Writer, f *File) error {
 	// generate lines
-	for _, l := range f {
+	for _, l := range f.Lines {
 		_, err := io.WriteString(w, GenerateLine(l))
 		if err != nil {
 			return err

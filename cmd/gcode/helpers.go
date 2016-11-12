@@ -6,7 +6,7 @@ import (
 	"github.com/256dpi/gcode"
 )
 
-func loadFile(path string) gcode.File {
+func loadFile(path string) *gcode.File {
 	// open g-code file
 	file, err := os.Open(path)
 	if err != nil {
@@ -25,7 +25,7 @@ func loadFile(path string) gcode.File {
 	return f
 }
 
-func writeFile(path string, f gcode.File) {
+func writeFile(path string, f *gcode.File) {
 	// create g-code file
 	file, err := os.Create(path)
 	if err != nil {
