@@ -1,0 +1,15 @@
+language: go
+go:
+  - 1.7
+  - tip
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
+install:
+  - go get -t ./...
+script:
+  - go test -coverprofile=gcode.coverprofile
+  - $HOME/gopath/bin/goveralls -coverprofile=gcode.coverprofile -service=travis-ci
+matrix:
+  allow_failures:
+    - go: tip

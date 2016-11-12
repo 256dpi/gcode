@@ -6,7 +6,31 @@
 [![Release](https://img.shields.io/github/release/256dpi/gcode.svg)](https://github.com/256dpi/gcode/releases)
 [![Go Report Card](https://goreportcard.com/badge/github.com/256dpi/gcode)](http://goreportcard.com/report/256dpi/gcode)
 
-**A G-Code parser and generator for Go.** 
+**A G-Code parser and generator for Go.**
+ 
+## Installation
+
+Get the package using the go tool:
+
+```bash
+$ go get -u github.com/256dpi/gcode
+```
+
+## Usage
+
+The included command line application can be used to post-process g-code files:
+
+```
+gcode.
+
+Usage:
+  gcode info <input>
+  gcode strip <input> <output>
+  gcode offset <input> <output> <x> <y> <z>
+
+Options:
+  -h --help  Show this screen.
+```
 
 ## License
 

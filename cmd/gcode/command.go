@@ -28,7 +28,7 @@ Usage:
   gcode offset <input> <output> <x> <y> <z>
 
 Options:
-  -h --help         Show this screen.
+  -h --help  Show this screen.
 `
 
 	a, _ := docopt.Parse(usage, nil, true, "", false)
