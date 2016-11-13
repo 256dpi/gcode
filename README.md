@@ -27,6 +27,7 @@ Usage:
   gcode info <input>
   gcode strip <input> <output>
   gcode offset <input> <output> <x> <y> <z>
+  gcode svg <input> <output>
 
 Options:
   -h --help  Show this screen.

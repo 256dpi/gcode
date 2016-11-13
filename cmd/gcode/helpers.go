@@ -41,3 +41,20 @@ func writeFile(path string, f *gcode.File) {
 		panic(err)
 	}
 }
+
+func writeFileString(path string, s string) {
+	// create g-code file
+	file, err := os.Create(path)
+	if err != nil {
+		panic(err)
+	}
+
+	// make sure file gets closed
+	defer file.Close()
+
+	// parse file
+	_, err = file.WriteString(s)
+	if err != nil {
+		panic(err)
+	}
+}

@@ -7,43 +7,56 @@ import (
 )
 
 func main() {
-	command := parseCommand()
+	c := parseCommand()
 
 	// triage command
-	if command.cInfo {
-		info(command)
-	} else if command.cStrip {
-		strip(command)
-	} else if command.cOffset {
-		offset(command)
+	if c.cInfo {
+		info(c)
+	} else if c.cStrip {
+		strip(c)
+	} else if c.cOffset {
+		offset(c)
+	} else if c.cSVG {
+		svg(c)
 	}
 }
 
-func info(command *command) {
+func info(c *command) {
 	// load g-code file
-	file := loadFile(command.aInput)
+	file := loadFile(c.aInput)
 
 	fmt.Printf("Lines: %d", len(file.Lines))
 }
 
-func strip(command *command) {
+func strip(c *command) {
 	// load g-code file
-	file := loadFile(command.aInput)
+	file := loadFile(c.aInput)
 
 	// strip comments
 	gcode.StripComments(file)
 
 	// write g-code file
-	writeFile(command.aOutput, file)
+	writeFile(c.aOutput, file)
 }
 
-func offset(command *command) {
+func offset(c *command) {
 	// load g-code file
-	file := loadFile(command.aInput)
+	file := loadFile(c.aInput)
 
 	// offset all coordinates
-	gcode.OffsetXYZ(file, command.aX, command.aY, command.aZ)
+	gcode.OffsetXYZ(file, c.aX, c.aY, c.aZ)
 
 	// write g-code file
-	writeFile(command.aOutput, file)
+	writeFile(c.aOutput, file)
+}
+
+func svg(c *command) {
+	// load g-code file
+	file := loadFile(c.aInput)
+
+	// get svg code
+	svg := gcode.ConvertToSVG(file)
+
+	// write svg file
+	writeFileString(c.aOutput, svg)
 }

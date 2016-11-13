@@ -11,6 +11,7 @@ type command struct {
 	cInfo   bool
 	cStrip  bool
 	cOffset bool
+	cSVG    bool
 
 	// arguments
 	aInput  string
@@ -27,6 +28,7 @@ Usage:
   gcode info <input>
   gcode strip <input> <output>
   gcode offset <input> <output> <x> <y> <z>
+  gcode svg <input> <output>
 
 Options:
   -h --help  Show this screen.
@@ -39,6 +41,7 @@ Options:
 		cInfo:   getBool(a["info"]),
 		cStrip:  getBool(a["strip"]),
 		cOffset: getBool(a["offset"]),
+		cSVG:    getBool(a["svg"]),
 
 		// arguments
 		aInput:  getString(a["<input>"]),
