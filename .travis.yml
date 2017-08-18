@@ -10,7 +10,16 @@ install:
   - go get -t ./...
 script:
   - go test -coverprofile=gcode.coverprofile
-  - $HOME/gopath/bin/goveralls -coverprofile=gcode.coverprofile -service=travis-ci
-matrix:
-  allow_failures:
-    - go: tip
+  - "$HOME/gopath/bin/goveralls -coverprofile=gcode.coverprofile -service=travis-ci"
+before_deploy:
+  - gox -osarch="darwin/amd64 linux/amd64" -output="./release/gcode-{{.OS}}-{{.Arch}}" github.com/256dpi/gcode/cmd/gcode
+deploy:
+  provider: releases
+  api_key:
+    secure: RDAzcPoYa2DrdPT+2ndN84g+1IVw+bnGZMyFYmAc7fWL6ZTISnCedF5K4fyO4beRcNIksrBuvtWDg+BmsiaJeyp5oX3qctShRvnVDz3mA+N+ADgt+4a+HWKTmqi6r0ufVqaAIOeqkOH+S/ESRh0mM7gi4xhsCjWe84EIu2PsmExh5JAQ/5rChKBJxUN3FL6oM/qv4evvfsFGkwD7POOgKLVKhW/hngSm5uqk+LzzzzBneYr9/lGjHE9PxKLSibBYUqMH299lGExyMxQqaj3fPetyjZfCaXw1bO/jLjzFwKjLGvy+IOJj1yQQdh5iyjQ6OU3jGheb/k6r90JMwwfb4zFeVjMBOv8UTiemd2gU/JXpelg6gTjx+M1pUDrMXX2eeUei18cvSll4Y9MLCXeU/p8kfSRTJ+zF93nQg5sINkI2yEQ/TT5Ir8j9otBlFVdTVpuUruVkOG9LKFpzg0XjWg9GMY3q8V7MdOTjn6AQ6qn8ZX4h+8jbBrlvQQ+3tsWhwG1H/Qi0gRgslLRkeQS4YS8UDyPcsgsd5ITyMyLRjWA3TYaoevtvll9FBa6BJ6SQ06Hg1mS7hgi2307zXCW/rklEykvDxC1df7HC8iXerkT7fbRNpG4xFuBj3C4MAFlQOU4x5n4ISM9Lw/+5wXdX58jBki1I/GVy++Lpama8VOA=
+  file:
+    - ./release/gcode-darwin-amd64
+    - ./release/gcode-linux-amd64
+  on:
+    repo: 256dpi/gcode
+    tags: true
