@@ -26,30 +26,30 @@ func TestParse(t *testing.T) {
 	file, err := ParseFile(r)
 	assert.NoError(t, err)
 	assert.Equal(t, &File{
-		Lines: []*Line{
+		Lines: []Line{
 			{
 				Comment: " Line Comment",
 			},
 			{
 				Comment: " After Line Comment",
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 1},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Comment: "Word Comment"},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 2},
 					{Comment: "Word Comment"},
 					{Letter: "M", Value: 1},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 3},
 					{Comment: "Word Comment"},
 					{Letter: "M", Value: 2},
@@ -58,37 +58,37 @@ func TestParse(t *testing.T) {
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 4},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 5},
 					{Letter: "X"},
 					{Letter: "Y"},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 6},
 					{Letter: "Z", Value: 12.7},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 7},
 					{Letter: "X", Value: -0.4},
 					{Letter: "Y", Value: 0.8},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "S", Value: 3000},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "X", Value: 56.666},
 				},
 			},

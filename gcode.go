@@ -27,7 +27,7 @@ func (c *GCode) String() string {
 
 // A Line consists of multiple G-Codes and a potential line comment.
 type Line struct {
-	Codes   []*GCode
+	Codes   []GCode
 	Comment string
 }
 
@@ -66,7 +66,7 @@ func (l *Line) String() string {
 
 // A File contains multiple lines of G-Codes.
 type File struct {
-	Lines []*Line
+	Lines []Line
 }
 
 // WriteFile will write the specified G-Code file to the passed writer.

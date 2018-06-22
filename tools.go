@@ -26,13 +26,16 @@ func StripComments(f *File) {
 			cl++
 			continue
 		}
+
+		// update line
+		f.Lines[j] = l
 	}
 }
 
 // OffsetXYZ will offset all X, Y and Z G-Code values by the specified values.
 func OffsetXYZ(f *File, x, y, z float64) {
 	for _, l := range f.Lines {
-		for _, c := range l.Codes {
+		for i, c := range l.Codes {
 			if c.Letter == "X" {
 				c.Value += x
 			} else if c.Letter == "Y" {
@@ -40,6 +43,9 @@ func OffsetXYZ(f *File, x, y, z float64) {
 			} else if c.Letter == "Z" {
 				c.Value += z
 			}
+
+			// update code
+			l.Codes[i] = c
 		}
 	}
 }

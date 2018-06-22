@@ -37,9 +37,9 @@ func ParseFile(r io.Reader) (*File, error) {
 }
 
 // ParseLine will parse the specified string as a line of G-Codes.
-func ParseLine(s string) (*Line, error) {
+func ParseLine(s string) (Line, error) {
 	// prepare line
-	l := &Line{}
+	l := Line{}
 
 	// extract line comment
 	if i := strings.Index(s, ";"); i >= 0 {
@@ -58,7 +58,7 @@ func ParseLine(s string) (*Line, error) {
 	// parse line
 	for s != "" {
 		// prepare code
-		c := &GCode{}
+		c := GCode{}
 
 		// check for word comment
 		if strings.HasPrefix(s, "(") {

@@ -8,15 +8,15 @@ import (
 
 func TestConvertToSVG(t *testing.T) {
 	f := &File{
-		Lines: []*Line{
+		Lines: []Line{
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "G", Value: 0},
 					{Letter: "X", Value: 2},
 				},
 			},
 			{
-				Codes: []*GCode{
+				Codes: []GCode{
 					{Letter: "X", Value: 3},
 					{Letter: "Y", Value: 4},
 				},
