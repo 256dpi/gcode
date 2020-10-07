@@ -12,6 +12,7 @@ func ConvertToSVG(f *File) string {
 	var x, y float64
 	var g int
 	var path []string
+	var maxX, maxY, shiftX, shiftY float64
 
 	// range over all codes
 	for _, l := range f.Lines {
@@ -43,10 +44,24 @@ func ConvertToSVG(f *File) string {
 				// set state
 				x = c.Value
 				ok = true
+
+				if c.Value > maxX {
+					maxX = c.Value
+				}
+				if c.Value < shiftX {
+					shiftX = c.Value
+				}
 			} else if c.Letter == "Y" {
 				// set state
 				y = c.Value
 				ok = true
+
+				if c.Value > maxY {
+					maxY = c.Value
+				}
+				if c.Value < shiftY {
+					shiftY = c.Value
+				}
 			}
 		}
 
@@ -69,5 +84,5 @@ func ConvertToSVG(f *File) string {
 		els = append(els, fmt.Sprintf(`<path d="%s" fill="none" stroke="%s" stroke-width="1" />`, strings.Join(gpath, " "), stroke))
 	}
 
-	return fmt.Sprintf(`<svg xmlns="http://www.w3.org/2000/svg">%s</svg>`, strings.Join(els, "\n"))
+	return fmt.Sprintf(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="%f %f %f %f">%s</svg>`, shiftX, shiftY, -1*shiftX+maxX, -1*shiftY+maxY, strings.Join(els, "\n"))
 }
