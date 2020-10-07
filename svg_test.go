@@ -26,5 +26,5 @@ func TestConvertToSVG(t *testing.T) {
 
 	svg := ConvertToSVG(f)
 
-	assert.Equal(t, `<svg xmlns="http://www.w3.org/2000/svg"><path d=" M0.000000,0.000000 L2.000000,0.000000 L3.000000,4.000000" fill="none" stroke="black" stroke-width="1" /></svg>`, svg)
+	assert.Equal(t, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0.000000 0.000000 3.000000 4.000000"><path d=" M0.000000,0.000000 L2.000000,0.000000 L3.000000,4.000000" fill="none" stroke="red" stroke-width="1" /></svg>`, svg)
 }
