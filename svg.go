@@ -61,8 +61,12 @@ func ConvertToSVG(f *File) string {
 	var els []string
 
 	// range over all levels
-	for _, paths := range paths {
-		els = append(els, fmt.Sprintf(`<path d="%s" fill="none" stroke="black" stroke-width="1" />`, strings.Join(paths, " ")))
+	for i, gpath := range paths {
+		stroke := "black"
+		if i == 0 {
+			stroke = "red"
+		}
+		els = append(els, fmt.Sprintf(`<path d="%s" fill="none" stroke="%s" stroke-width="1" />`, strings.Join(gpath, " "), stroke))
 	}
 
 	return fmt.Sprintf(`<svg xmlns="http://www.w3.org/2000/svg">%s</svg>`, strings.Join(els, "\n"))
