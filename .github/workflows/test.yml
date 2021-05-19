@@ -14,8 +14,8 @@ jobs:
         run: go test ./...
       - name: Build
         run: |
-          env GOOS=darwin GOARCH=amd64 go build ./cmd/gcode -o gcode-darwin-amd64
-          env GOOS=linux GOARCH=amd64 go build ./cmd/gcode -o gcode-linux-amd64
+          env GOOS=darwin GOARCH=amd64 go build -o gcode-darwin-amd64 ./cmd/gcode
+          env GOOS=linux GOARCH=amd64 go build -o gcode-linux-amd64 ./cmd/gcode
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
