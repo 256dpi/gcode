@@ -1,0 +1,27 @@
+on: [push, pull_request]
+name: Test
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        run: go test ./...
+      - name: Build
+        run: |
+          env GOOS=darwin GOARCH=amd64 go build ./cmd/gcode -o gcode-darwin-amd64
+          env GOOS=linux GOARCH=amd64 go build ./cmd/gcode -o gcode-linux-amd64
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            gcode-darwin-amd64
+            gcode-linux-amd64
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
